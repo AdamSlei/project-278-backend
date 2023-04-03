@@ -11,7 +11,8 @@ async function fetchApps() {
       "https://serpapi.com/search.json?engine=google_play&store=apps&api_key=db20b171d4cfd8f5df0ec14a94d81ea187102cd82bf37a34316d5280bd3fe51a"
     );
 
-    const apps = response.data.apps_results;
+    console.log(response.data.organic_results);
+    const apps = response.data.organic_results;
     return apps;
   } catch (error) {
     console.error(`Error fetching data: ${error}`);
@@ -57,14 +58,15 @@ async function storeApp(app) {
 (async () => {
   const apps = await fetchApps();
 
-  if (apps && apps.length > 0) {
-    for (const app of apps) {
-      await storeApp(app);
-    }
-    console.log("All apps stored");
-  } else {
-    console.log("No apps to store");
-  }
+  //   if (apps && apps.length > 0) {
+  //     for (const app of apps) {
+  //       await storeApp(app);
+  //     }
+  //     console.log("All apps stored");
+  //   } else {
+  //     console.log("No apps to store");
+  //   }
 
+  console.log(apps);
   await pool.end();
 })();
