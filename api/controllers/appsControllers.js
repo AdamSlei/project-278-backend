@@ -11,7 +11,7 @@ const getApps = async (req, res) => {
 
 const getApp = async (req, res) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
     const app = await pool.query("SELECT * FROM apps WHERE app_id = $1", [
       id,
     ]);

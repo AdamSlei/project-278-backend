@@ -1,7 +1,7 @@
 const pool = require("../config/db");
 
 // Get all books
-const getAllBooks = async (req, res) => {
+const getBooks = async (req, res) => {
   try {
     const allBooks = await pool.query("SELECT * FROM books");
     res.json(allBooks.rows);
@@ -12,7 +12,7 @@ const getAllBooks = async (req, res) => {
 };
 
 // Get a specific book by ID
-const getBookById = async (req, res) => {
+const getBook = async (req, res) => {
   try {
     const { id } = req.params;
     const book = await pool.query("SELECT * FROM books WHERE book_id = $1", [
@@ -80,4 +80,4 @@ const deleteBook = async (req, res) => {
   }
 };
 
-module.exports = { getAllBooks, getBookById, addBook, updateBook, deleteBook };
+module.exports = { getBooks, getBook, addBook, updateBook, deleteBook };

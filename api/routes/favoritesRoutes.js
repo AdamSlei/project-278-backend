@@ -5,19 +5,16 @@ const {
   getFavorites,
   getFavorite,
   addFavorite,
-  updateFavorite,
+  // updateFavorite,
   deleteFavorite,
 } = require("../controllers/favoritesControllers");
 
-router
-  .route("/")
-  .get(getFavorites)
-  .post(addFavorite);
+router.route("/").get(getFavorites).post(addFavorite);
 
 router
   .route("/:id")
   .get(getFavorite)
-  .put(updateFavorite)
+  // .put(updateFavorite)
   .delete(deleteFavorite);
 
 module.exports = router;

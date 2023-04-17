@@ -12,7 +12,11 @@ const getReviews = async (req, res) => {
 const getReview = async (req, res) => {
   try {
     const { id } = req.params;
-    const review = await pool.query("SELECT * FROM reviews WHERE id = $1", [id]);
+    // console.log(req.query);
+    const review = await pool.query(
+      "SELECT * FROM reviews WHERE review_id = $1 LIMIT 1",
+      [id]
+    );
     res.json(review.rows[0]);
   } catch (err) {
     console.error(err.message);
@@ -38,7 +42,7 @@ const updateReview = async (req, res) => {
     const { id } = req.params;
     const { title, body, rating, user_id, movie_id } = req.body;
     const updatedReview = await pool.query(
-      "UPDATE reviews SET title = $1, body = $2, rating = $3, user_id = $4, movie_id = $5 WHERE id = $6 RETURNING *",
+      "UPDATE reviews SET title = $1, body = $2, rating = $3, user_id = $4, movie_id = $5 WHERE review_id = $6 RETURNING *",
       [title, body, rating, user_id, movie_id, id]
     );
     res.json(updatedReview.rows[0]);
@@ -50,7 +54,10 @@ const updateReview = async (req, res) => {
 const deleteReview = async (req, res) => {
   try {
     const { id } = req.params;
-    const deletedReview = await pool.query("DELETE FROM reviews WHERE id = $1 RETURNING *", [id]);
+    const deletedReview = await pool.query(
+      "DELETE FROM reviews WHERE review_id = $1 RETURNING *",
+      [id]
+    );
     res.json(deletedReview.rows[0]);
   } catch (err) {
     console.error(err.message);

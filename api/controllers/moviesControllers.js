@@ -10,10 +10,12 @@ const getMovies = async (req, res) => {
   }
 };
 
-const getMovieById = async (req, res) => {
+const getMovie = async (req, res) => {
   try {
     const { id } = req.params;
-    const movie = await pool.query("SELECT * FROM movies WHERE id = $1", [id]);
+    const movie = await pool.query("SELECT * FROM movies WHERE movie_id = $1", [
+      id,
+    ]);
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
     }
@@ -79,7 +81,7 @@ const deleteMovie = async (req, res) => {
 
 module.exports = {
   getMovies,
-  getMovieById,
+  getMovie,
   addMovie,
   updateMovie,
   deleteMovie,

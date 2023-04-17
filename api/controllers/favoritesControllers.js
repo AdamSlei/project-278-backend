@@ -14,6 +14,20 @@ const getFavorites = async (req, res) => {
   }
 };
 
+const getFavorite = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const favorite = await pool.query(
+      "SELECT * FROM favorites WHERE favorites_id = $1 LIMIT 1",
+      [id]
+    );
+    res.json(favorite.rows[0]);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
 const addFavorite = async (req, res) => {
   try {
     const { userId, bookId } = req.body;
@@ -44,6 +58,7 @@ const deleteFavorite = async (req, res) => {
 
 module.exports = {
   getFavorites,
+  getFavorite,
   addFavorite,
   deleteFavorite,
 };
