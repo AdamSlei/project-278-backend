@@ -9,15 +9,8 @@ const {
   deleteReview,
 } = require("../controllers/reviewsControllers");
 
-router
-  .route("/")
-  .get(getReviews)
-  .post(addReview);
+router.route("/").get(getReviews).post(addReview);
 
-router
-  .route("/:id")
-  .get(getReview)
-  .put(updateReview)
-  .delete(deleteReview);
+router.route("/:id").get(getReview).put(updateReview).delete(deleteReview);
 
 module.exports = router;

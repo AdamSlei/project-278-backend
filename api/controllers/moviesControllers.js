@@ -5,7 +5,7 @@ const getMovies = async (req, res) => {
     const allMovies = await pool.query("SELECT * FROM movies");
     res.json(allMovies.rows);
   } catch (err) {
-       console.error({ success: false, error: err.message });
+    console.error({ success: false, error: err.message });
 
     res.status(500).json({ message: "Server Error" });
   }
@@ -22,7 +22,7 @@ const getMovie = async (req, res) => {
     }
     res.json(movie.rows[0]);
   } catch (err) {
-       console.error({ success: false, error: err.message });
+    console.error({ success: false, error: err.message });
 
     res.status(500).json({ message: "Server Error" });
   }
@@ -36,9 +36,9 @@ const addMovie = async (req, res) => {
       "INSERT INTO movies (title, director, year, rating) VALUES ($1, $2, $3, $4)",
       [title, director, year, rating]
     );
-    res.json({ message: "Movie created successfully" });
+    res.json({ success: true,message: "Movie created successfully" });
   } catch (err) {
-       console.error({ success: false, error: err.message });
+    console.error({ success: false, error: err.message });
 
     res.status(500).json({ message: "Server Error" });
   }
@@ -58,10 +58,9 @@ const updateMovie = async (req, res) => {
       "UPDATE movies SET title = $1, director = $2, year = $3, rating = $4 WHERE id = $5",
       [title, director, year, rating, id]
     );
-    res.json({ message: "Movie updated successfully" });
+    res.json({success: true, message: "Movie updated successfully" });
   } catch (err) {
-       console.error({ success: false, error: err.message });
-
+    console.error({ success: false, error: err.message });
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -76,9 +75,11 @@ const deleteMovie = async (req, res) => {
     }
 
     await pool.query("DELETE FROM movies WHERE id = $1", [id]);
-    res.json({ message: "Movie deleted successfully" });
+    res
+      .status(200)
+      .json({ success: true, message: "Movie deleted successfully" });
   } catch (err) {
-       console.error({ success: false, error: err.message });
+    console.error({ success: false, error: err.message });
 
     res.status(500).json({ message: "Server Error" });
   }

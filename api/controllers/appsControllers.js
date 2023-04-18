@@ -5,21 +5,48 @@ const getApps = async (req, res) => {
     const allApps = await pool.query("SELECT * FROM apps");
     res.json(allApps.rows);
   } catch (err) {
-       console.error({ success: false, error: err.message });
+    console.error({ success: false, error: err.message });
+  }
+};
 
+const getTopSellingApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE istopselling = true"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+const getTopGrossingApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE istopgrossing = true"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+const getTopPaidApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE istoppaid = true"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
   }
 };
 
 const getApp = async (req, res) => {
   try {
     const { id } = req.params;
-    const app = await pool.query("SELECT * FROM apps WHERE app_id = $1", [
-      id,
-    ]);
+    const app = await pool.query("SELECT * FROM apps WHERE app_id = $1", [id]);
     res.json(app.rows);
   } catch (err) {
-       console.error({ success: false, error: err.message });
-
+    console.error({ success: false, error: err.message });
   }
 };
 
@@ -33,8 +60,7 @@ const addApp = async (req, res) => {
     );
     res.json("App was added!");
   } catch (err) {
-       console.error({ success: false, error: err.message });
-
+    console.error({ success: false, error: err.message });
   }
 };
 
@@ -49,8 +75,7 @@ const updateApp = async (req, res) => {
 
     res.json(`App with id = ${id} was updated!`);
   } catch (err) {
-       console.error({ success: false, error: err.message });
-
+    console.error({ success: false, error: err.message });
   }
 };
 
@@ -70,4 +95,7 @@ module.exports = {
   addApp,
   updateApp,
   deleteApp,
+  getTopGrossingApps,
+  getTopPaidApps,
+  getTopSellingApps,
 };
