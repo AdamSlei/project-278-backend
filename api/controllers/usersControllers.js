@@ -3,21 +3,23 @@ const pool = require("../config/db");
 const getUsers = async (req, res) => {
   try {
     const allUsers = await pool.query("SELECT * FROM USERS");
-    res.json(allUsers.rows);
+    res.status(200).json({ success: true, payload: allUsers.rows });
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
 const getUser = async (req, res) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
     const user = await pool.query("SELECT * FROM USERS WHERE user_id = $1", [
       id,
     ]);
-    res.json(user.rows);
+    res.status(200).json({ success: true, payload: user.rows });
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
@@ -26,37 +28,46 @@ const addUser = async (req, res) => {
     const { username, password, email, profile_picture } = req.body;
 
     await pool.query(
-      "INSERT INTO USERS (username, password, email, profile_picture) VALUES ($1 , $2  ,$3 , $4)",
+      "INSERT INTO USERS (username, password, email, profile_picture) VALUES ($1, $2, $3, $4)",
       [username, password, email, profile_picture]
     );
-    res.json("FREELANCER was Added!");
+    res
+      .status(201)
+      .json({ success: true, message: `User ${username} was added!` });
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
 const updateUser = async (req, res) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
     const { username, password, email, profile_picture } = req.body;
     await pool.query(
-      "UPDATE USERS SET username = $1 , password = $2 , email = $3 , profile_picture = $4 WHERE userID = $5",
+      "UPDATE USERS SET username = $1, password = $2, email = $3, profile_picture = $4 WHERE user_id = $5",
       [username, password, email, profile_picture, id]
     );
 
-    res.json(`User with id = ${id} was updated!`);
+    res
+      .status(200)
+      .json({ success: true, message: `User ${username} was updated!` });
   } catch (err) {
     console.error(err.message);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 
 const deleteUser = async (req, res) => {
   try {
-    const { id } = req.query;
+    const { id } = req.params;
     await pool.query("DELETE FROM USERS WHERE user_id = $1", [id]);
-    res.json(`User with id = ${id} was deleted!`);
+    res
+      .status(200)
+      .json({ success: true, message: `User with id = ${id} was deleted!` });
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
+    res.status(500).json({ success: false, error: err.message });
   }
 };
 

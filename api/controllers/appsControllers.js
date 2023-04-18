@@ -5,7 +5,8 @@ const getApps = async (req, res) => {
     const allApps = await pool.query("SELECT * FROM apps");
     res.json(allApps.rows);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 
@@ -17,7 +18,8 @@ const getApp = async (req, res) => {
     ]);
     res.json(app.rows);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 
@@ -31,7 +33,8 @@ const addApp = async (req, res) => {
     );
     res.json("App was added!");
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 
@@ -46,7 +49,8 @@ const updateApp = async (req, res) => {
 
     res.json(`App with id = ${id} was updated!`);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 

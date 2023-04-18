@@ -5,7 +5,8 @@ const getGames = async (req, res) => {
     const allGames = await pool.query("SELECT * FROM games");
     res.json(allGames.rows);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 
@@ -15,7 +16,8 @@ const getGame = async (req, res) => {
     const game = await pool.query("SELECT * FROM games WHERE game_id = $1", [id]);
     res.json(game.rows[0]);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 
@@ -28,7 +30,8 @@ const addGame = async (req, res) => {
     );
     res.json("Game was added to the database!");
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 
@@ -42,7 +45,8 @@ const updateGame = async (req, res) => {
     );
     res.json(`Game with id = ${id} was updated!`);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
   }
 };
 

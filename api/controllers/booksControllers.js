@@ -6,7 +6,8 @@ const getBooks = async (req, res) => {
     const allBooks = await pool.query("SELECT * FROM books");
     res.json(allBooks.rows);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json("Server Error");
   }
 };
@@ -23,7 +24,8 @@ const getBook = async (req, res) => {
     }
     res.json(book.rows[0]);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json("Server Error");
   }
 };
@@ -38,7 +40,8 @@ const addBook = async (req, res) => {
     );
     res.json("Book was added!");
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json("Server Error");
   }
 };
@@ -57,7 +60,8 @@ const updateBook = async (req, res) => {
     }
     res.json(result.rows[0]);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json("Server Error");
   }
 };
@@ -75,7 +79,8 @@ const deleteBook = async (req, res) => {
     }
     res.json(`Book with ID ${id} was deleted!`);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json("Server Error");
   }
 };

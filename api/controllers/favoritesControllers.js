@@ -2,14 +2,11 @@ const pool = require("../config/db");
 
 const getFavorites = async (req, res) => {
   try {
-    const { userId } = req.query;
-    const favorites = await pool.query(
-      "SELECT * FROM favorites WHERE user_id = $1",
-      [userId]
-    );
+    const favorites = await pool.query("SELECT * FROM favorites");
     res.json(favorites.rows);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).send("Server error");
   }
 };
@@ -18,12 +15,13 @@ const getFavorite = async (req, res) => {
   try {
     const { id } = req.params;
     const favorite = await pool.query(
-      "SELECT * FROM favorites WHERE favorites_id = $1 LIMIT 1",
+      "SELECT * FROM favorites WHERE user_id = $1 LIMIT 1",
       [id]
     );
     res.json(favorite.rows[0]);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).send("Server error");
   }
 };
@@ -38,7 +36,8 @@ const addFavorite = async (req, res) => {
     );
     res.json("Favorite added successfully!");
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).send("Server error");
   }
 };
@@ -51,7 +50,8 @@ const deleteFavorite = async (req, res) => {
     ]);
     res.json("Favorite deleted successfully!");
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).send("Server error");
   }
 };

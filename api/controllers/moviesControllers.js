@@ -5,7 +5,8 @@ const getMovies = async (req, res) => {
     const allMovies = await pool.query("SELECT * FROM movies");
     res.json(allMovies.rows);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -21,7 +22,8 @@ const getMovie = async (req, res) => {
     }
     res.json(movie.rows[0]);
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -36,7 +38,8 @@ const addMovie = async (req, res) => {
     );
     res.json({ message: "Movie created successfully" });
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -57,7 +60,8 @@ const updateMovie = async (req, res) => {
     );
     res.json({ message: "Movie updated successfully" });
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json({ message: "Server Error" });
   }
 };
@@ -74,7 +78,8 @@ const deleteMovie = async (req, res) => {
     await pool.query("DELETE FROM movies WHERE id = $1", [id]);
     res.json({ message: "Movie deleted successfully" });
   } catch (err) {
-    console.error(err.message);
+       console.error({ success: false, error: err.message });
+
     res.status(500).json({ message: "Server Error" });
   }
 };
