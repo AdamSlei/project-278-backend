@@ -2,7 +2,7 @@ const pool = require("../config/db");
 
 const getApps = async (req, res) => {
   try {
-    const allApps = await pool.query("SELECT * FROM apps");
+    const allApps = await pool.query("SELECT * FROM apps  limit 10;");
     res.json(allApps.rows);
   } catch (err) {
     console.error({ success: false, error: err.message });
@@ -12,7 +12,7 @@ const getApps = async (req, res) => {
 const getTopSellingApps = async (req, res) => {
   try {
     const allApps = await pool.query(
-      "SELECT * FROM apps WHERE istopselling = true"
+      "SELECT * FROM apps WHERE istopselling = true limit 10;"
     );
     res.json(allApps.rows);
   } catch (err) {
@@ -22,7 +22,7 @@ const getTopSellingApps = async (req, res) => {
 const getTopGrossingApps = async (req, res) => {
   try {
     const allApps = await pool.query(
-      "SELECT * FROM apps WHERE istopgrossing = true"
+      "SELECT * FROM apps WHERE istopgrossing = true limit 10;"
     );
     res.json(allApps.rows);
   } catch (err) {
@@ -32,7 +32,58 @@ const getTopGrossingApps = async (req, res) => {
 const getTopPaidApps = async (req, res) => {
   try {
     const allApps = await pool.query(
-      "SELECT * FROM apps WHERE istoppaid = true"
+      "SELECT * FROM apps WHERE istoppaid = true limit 10;"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+
+const getTravelApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE category = 'Travel' limit 10;"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+const getMessagingApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE category = 'Messaging' limit 10;"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+const getProductivityApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE category = 'Productivity' limit 10;"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+const getPremiumApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE category = 'Premium' limit 10;"
+    );
+    res.json(allApps.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+  }
+};
+const getRecommendedApps = async (req, res) => {
+  try {
+    const allApps = await pool.query(
+      "SELECT * FROM apps WHERE category = 'Recommended' limit 10;"
     );
     res.json(allApps.rows);
   } catch (err) {
@@ -43,7 +94,10 @@ const getTopPaidApps = async (req, res) => {
 const getApp = async (req, res) => {
   try {
     const { id } = req.params;
-    const app = await pool.query("SELECT * FROM apps WHERE app_id = $1", [id]);
+    const app = await pool.query(
+      "SELECT * FROM apps WHERE app_id = $1 limit 10",
+      [id]
+    );
     res.json(app.rows);
   } catch (err) {
     console.error({ success: false, error: err.message });
@@ -98,4 +152,9 @@ module.exports = {
   getTopGrossingApps,
   getTopPaidApps,
   getTopSellingApps,
+  getTravelApps,
+  getMessagingApps,
+  getProductivityApps,
+  getPremiumApps,
+  getRecommendedApps,
 };
