@@ -16,7 +16,7 @@ const getMovies = async (req, res) => {
 const getActionMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "SELECT * FROM movies WHERE category = 'Action & Adventure' limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies WHERE category = 'Action & Adventure' limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -32,7 +32,7 @@ const getActionMovie = async (req, res) => {
 const getAnimationMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "SELECT * FROM movies WHERE category = 'Animation' limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling FROM movies WHERE category = 'Animation' limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -48,7 +48,7 @@ const getAnimationMovie = async (req, res) => {
 const getComedyMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "SELECT * FROM movies WHERE category = 'Comedy' limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies WHERE category = 'Comedy' limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -64,7 +64,7 @@ const getComedyMovie = async (req, res) => {
 const getDocumentaryMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "SELECT * FROM movies WHERE category = 'Documentary' limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies WHERE category = 'Documentary' limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -80,7 +80,7 @@ const getDocumentaryMovie = async (req, res) => {
 const getHistoryMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "SELECT * FROM movies WHERE category = 'History' limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies WHERE category = 'History' limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -96,7 +96,7 @@ const getHistoryMovie = async (req, res) => {
 const getTopSellingMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "select * from movies where istopselling = true limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies where istopselling = true limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -111,7 +111,7 @@ const getTopSellingMovie = async (req, res) => {
 const getTopMovie = async (req, res) => {
   try {
     const movie = await pool.query(
-      "select * from movies where istopmovie = true limit 10;"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from where istopmovie = true limit 10;"
     );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
@@ -127,7 +127,7 @@ const getTopMovie = async (req, res) => {
 const getMovie = async (req, res) => {
   try {
     const { id } = req.params;
-    const movie = await pool.query("SELECT * FROM movies WHERE movie_id = $1", [
+    const movie = await pool.query("select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from WHERE movie_id = $1", [
       id,
     ]);
     if (movie.rows.length === 0) {
