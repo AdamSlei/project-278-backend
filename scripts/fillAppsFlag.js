@@ -10,16 +10,15 @@ const client = new Client({
 async function updateAppsWithRandomFlags() {
   await client.connect();
 
-  const { rows: apps } = await client.query("SELECT app_id FROM apps");
+  const { rows: movies } = await client.query("SELECT movie_id FROM movies");
 
-  for (const app of apps) {
+  for (const movie of movies) {
     const isTopSelling = Math.random() > 0.5;
-    const isTopGrossing = Math.random() > 0.5;
-    const isTopPaid = Math.random() > 0.5;
+    const isTopMovie = Math.random() > 0.5;
 
     await client.query(
-      "UPDATE apps SET isTopSelling = $1, isTopGrossing = $2, isTopPaid = $3 WHERE app_id = $4",
-      [isTopSelling, isTopGrossing, isTopPaid, app.app_id]
+      "UPDATE movies SET istopselling = $1, istopmovie = $2 WHERE movie_id = $3",
+      [isTopSelling, isTopMovie, movie.movie_id]
     );
   }
 

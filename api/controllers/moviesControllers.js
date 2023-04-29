@@ -2,8 +2,121 @@ const pool = require("../config/db");
 
 const getMovies = async (req, res) => {
   try {
-    const allMovies = await pool.query("SELECT * FROM movies");
+    const allMovies = await pool.query(
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies"
+    );
     res.json(allMovies.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getActionMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "SELECT * FROM movies WHERE category = 'Action & Adventure' limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getAnimationMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "SELECT * FROM movies WHERE category = 'Animation' limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getComedyMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "SELECT * FROM movies WHERE category = 'Comedy' limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getDocumentaryMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "SELECT * FROM movies WHERE category = 'Documentary' limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getHistoryMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "SELECT * FROM movies WHERE category = 'History' limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+
+const getTopSellingMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "select * from movies where istopselling = true limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
+  } catch (err) {
+    console.error({ success: false, error: err.message });
+
+    res.status(500).json({ message: "Server Error" });
+  }
+};
+const getTopMovie = async (req, res) => {
+  try {
+    const movie = await pool.query(
+      "select * from movies where istopmovie = true limit 10;"
+    );
+    if (movie.rows.length === 0) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+    res.json(movie.rows);
   } catch (err) {
     console.error({ success: false, error: err.message });
 
@@ -36,7 +149,7 @@ const addMovie = async (req, res) => {
       "INSERT INTO movies (title, director, year, rating) VALUES ($1, $2, $3, $4)",
       [title, director, year, rating]
     );
-    res.json({ success: true,message: "Movie created successfully" });
+    res.json({ success: true, message: "Movie created successfully" });
   } catch (err) {
     console.error({ success: false, error: err.message });
 
@@ -58,7 +171,7 @@ const updateMovie = async (req, res) => {
       "UPDATE movies SET title = $1, director = $2, year = $3, rating = $4 WHERE id = $5",
       [title, director, year, rating, id]
     );
-    res.json({success: true, message: "Movie updated successfully" });
+    res.json({ success: true, message: "Movie updated successfully" });
   } catch (err) {
     console.error({ success: false, error: err.message });
     res.status(500).json({ message: "Server Error" });
@@ -91,4 +204,11 @@ module.exports = {
   addMovie,
   updateMovie,
   deleteMovie,
+  getActionMovie,
+  getAnimationMovie,
+  getComedyMovie,
+  getDocumentaryMovie,
+  getHistoryMovie,
+  getTopMovie,
+  getTopSellingMovie,
 };

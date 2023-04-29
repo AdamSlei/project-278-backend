@@ -14,10 +14,11 @@ const {
   getMessagingApps,
   getProductivityApps,
   getPremiumApps,
-  getRecommendedApps
+  getRecommendedApps,
 } = require("../controllers/appsControllers");
 
 router.route("/").get(getApps).post(addApp);
+
 router.route("/topselling").get(getTopSellingApps);
 router.route("/toppaid").get(getTopPaidApps);
 router.route("/topgrossing").get(getTopGrossingApps);
