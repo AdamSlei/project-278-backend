@@ -2,7 +2,20 @@ const pool = require("../config/db");
 
 const getApps = async (req, res) => {
   try {
-    const allApps = await pool.query("SELECT * FROM apps  limit 10;");
+    const allApps = await pool.query(`SELECT app_id,
+          app_name AS name,
+          category,
+          developer,
+          description,
+          price,
+          created_at,
+          logo,
+          istopselling,
+          istopgrossing,
+          istoppaid,
+          rating
+      FROM apps
+      `);
     res.json(allApps.rows);
   } catch (err) {
     console.error({ success: false, error: err.message });
