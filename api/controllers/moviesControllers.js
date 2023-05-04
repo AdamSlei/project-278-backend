@@ -3,7 +3,7 @@ const pool = require("../config/db");
 const getMovies = async (req, res) => {
   try {
     const allMovies = await pool.query(
-      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from movies"
+      "select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling , rating from movies"
     );
     res.json(allMovies.rows);
   } catch (err) {
