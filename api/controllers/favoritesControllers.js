@@ -16,87 +16,91 @@ const getFavorite = async (req, res) => {
     const { id } = req.params;
     var query = `
     SELECT
-        f.favorites_id,
-        f.user_id,
-        f.created_at,
-        f.isStillMarked,
-        'app' AS favorite_type,
-        a.app_id AS favorite_id,
-        a.app_name AS favorite_name,
-        a.category AS favorite_category,
-        a.developer AS favorite_developer,
-        a.description AS favorite_description,
-        a.price AS favorite_price
-    FROM
-        favorites f
-    JOIN
-        apps a ON f.app_id = a.app_id
-    WHERE
-        f.user_id = ${id}
-    
-    UNION
-    
-    SELECT
-        f.favorites_id,
-        f.user_id,
-        f.created_at,
-        f.isStillMarked,
-        'game' AS favorite_type,
-        g.game_id AS favorite_id,
-        g.game_name AS favorite_name,
-        g.category AS favorite_category,
-        g.developer AS favorite_developer,
-        g.description AS favorite_description,
-        g.price AS favorite_price
-    FROM
-        favorites f
-    JOIN
-        games g ON f.game_id = g.game_id
-    WHERE
+    f.favorites_id,
+    f.user_id,
+    f.created_at,
+    f.isStillMarked,
+    'app' AS favorite_type,
+	  a.media AS favorite_media,
+    a.app_id AS favorite_id,
+    a.app_name AS favorite_name,
+    a.category AS favorite_category,
+    a.developer AS favorite_developer,
+    a.description AS favorite_description,
+    a.price AS favorite_price
+FROM
+    favorites f
+JOIN
+    apps a ON f.app_id = a.app_id
+WHERE
     f.user_id = ${id}
-    
-    UNION
-    
-    SELECT
-        f.favorites_id,
-        f.user_id,
-        f.created_at,
-        f.isStillMarked,
-        'movie' AS favorite_type,
-        m.movie_id AS favorite_id,
-        m.movie_name AS favorite_name,
-        m.category AS favorite_category,
-        m.director AS favorite_developer,
-        m.description AS favorite_description,
-        m.price AS favorite_price
-    FROM
-        favorites f
-    JOIN
-        movies m ON f.movie_id = m.movie_id
-    WHERE
-    f.user_id = ${id}
-    
-    UNION
-    
-    SELECT
-        f.favorites_id,
-        f.user_id,
-        f.created_at,
-        f.isStillMarked,
-        'book' AS favorite_type,
-        b.book_id AS favorite_id,
-        b.name AS favorite_name,
-        b.category AS favorite_category,
-        b.author AS favorite_developer,
-        b.description AS favorite_description,
-        b.price AS favorite_price
-    FROM
-        favorites f
-    JOIN
-        books b ON f.book_id = b.book_id
-    WHERE
-    f.user_id = ${id};
-    `;
+
+UNION
+
+SELECT
+    f.favorites_id,
+    f.user_id,
+    f.created_at,
+    f.isStillMarked,
+    'game' AS favorite_type,
+	g.media AS favorite_media,
+    g.game_id AS favorite_id,
+    g.game_name AS favorite_name,
+    g.category AS favorite_category,
+    g.developer AS favorite_developer,
+    g.description AS favorite_description,
+    g.price AS favorite_price
+FROM
+    favorites f
+JOIN
+    games g ON f.game_id = g.game_id
+WHERE
+f.user_id = ${id}
+
+UNION
+
+SELECT
+    f.favorites_id,
+    f.user_id,
+    f.created_at,
+    f.isStillMarked,
+    'movie' AS favorite_type,
+	m.media AS favorite_media,
+    m.movie_id AS favorite_id,
+    m.movie_name AS favorite_name,
+    m.category AS favorite_category,
+    m.director AS favorite_developer,
+    m.description AS favorite_description,
+    m.price AS favorite_price
+FROM
+    favorites f
+JOIN
+    movies m ON f.movie_id = m.movie_id
+WHERE
+f.user_id = ${id}
+
+UNION
+
+SELECT
+    f.favorites_id,
+    f.user_id,
+    f.created_at,
+    f.isStillMarked,
+    'book' AS favorite_type,
+	b.media AS favorite_media,
+    b.book_id AS favorite_id,
+    b.name AS favorite_name,
+    b.category AS favorite_category,
+    b.author AS favorite_developer,
+    b.description AS favorite_description,
+    b.price AS favorite_price
+FROM
+    favorites f
+JOIN
+    books b ON f.book_id = b.book_id
+WHERE
+f.user_id = ${id};
+`;
     const favorite = await pool.query(query);
     res.json(favorite.rows);
   } catch (err) {
