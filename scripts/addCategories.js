@@ -57,22 +57,17 @@ const client = new Client({
 client.connect();
 
 const categories = [
-    'Romance',
-    'History',
-    'Cooking',
-    'Religion',
-    'Science',
-];
+    "Arcade", "New", "Music", "Board", "Racing"];
 
 const updateCategoryColumn = async () => {
     try {
         // Fetch all rows from the books table
-        const res = await client.query('SELECT book_id FROM books');
+        const res = await client.query('SELECT game_id FROM games');
 
         // Update the category column with random values from the categories list
         for (const row of res.rows) {
             const randomCategory = categories[Math.floor(Math.random() * categories.length)];
-            await client.query('UPDATE books SET category = $1 WHERE book_id = $2', [randomCategory, row.book_id]);
+            await client.query('UPDATE games SET category = $1 WHERE game_id = $2', [randomCategory, row.game_id]);
         }
 
         console.log('Category column updated with random values from the provided list.');
