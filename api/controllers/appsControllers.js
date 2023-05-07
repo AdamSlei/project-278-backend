@@ -9,7 +9,7 @@ const getApps = async (req, res) => {
           description,
           price,
           created_at,
-          logo,
+          media,
           istopselling,
           istopgrossing,
           istoppaid,
