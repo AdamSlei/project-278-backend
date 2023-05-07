@@ -134,7 +134,8 @@ const getMovie = async (req, res) => {
       category,
       description,
       media,
-      rating
+      rating,
+      price
      from MOVIES WHERE movie_id = $1`,
       [id]
     );

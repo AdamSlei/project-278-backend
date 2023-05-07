@@ -23,7 +23,8 @@ const getBook = async (req, res) => {
         category,
         description,
         media,
-        rating
+        rating,
+        price
     FROM books 
     WHERE book_id = $1
     `,

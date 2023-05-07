@@ -33,7 +33,8 @@ const getGame = async (req, res) => {
     category,
     description,
     media,
-    rating
+    rating,
+    price
     FROM games WHERE game_id = $1`, [
       id,
     ]);

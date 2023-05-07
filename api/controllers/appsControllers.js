@@ -113,7 +113,8 @@ const getApp = async (req, res) => {
       category,
       description,
       media,
-      rating
+      rating,
+      price
     FROM apps 
     WHERE app_id = $1 
     `,
