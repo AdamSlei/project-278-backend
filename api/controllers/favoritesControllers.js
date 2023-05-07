@@ -15,10 +15,10 @@ const getFavorite = async (req, res) => {
   try {
     const { id } = req.params;
     const favorite = await pool.query(
-      "SELECT * FROM favorites WHERE user_id = $1 LIMIT 1",
+      "SELECT * FROM favorites WHERE user_id = $1",
       [id]
     );
-    res.json(favorite.rows[0]);
+    res.json(favorite.rows);
   } catch (err) {
        console.error({ success: false, error: err.message });
 

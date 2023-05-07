@@ -14,7 +14,7 @@ const getReview = async (req, res) => {
   try {
     const { id } = req.params;
     const review = await pool.query(
-      "SELECT * FROM reviews WHERE review_id = $1 LIMIT 1",
+      "SELECT * FROM reviews WHERE user_id = $1 LIMIT 1",
       [id]
     );
     res.status(200).json({ success: true, payload: review.rows[0] });
