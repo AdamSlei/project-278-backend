@@ -18,7 +18,9 @@ const getUser = async (req, res) => {
       "SELECT user_id , username, profile_picture FROM USERS WHERE email = $1",
       [email]
     );
-    res.status(200).json({ success: true, payload: user.rows[0] ?? "User not found" });
+    res
+      .status(200)
+      .json({ success: true, payload: user.rows[0] ?? "User not found" });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ success: false, error: err.message });
@@ -33,9 +35,12 @@ const addUser = async (req, res) => {
       "INSERT INTO USERS (username, password, email, profile_picture) VALUES ($1, $2, $3, $4)",
       [username, password, email, profile_picture]
     );
-    res
-      .status(201)
-      .json({ success: true, message: `User ${username} was added!` });
+
+    const user = await pool.query(
+      "SELECT user_id , username, profile_picture FROM USERS WHERE email = $1",
+      [email]
+    );
+    res.status(201).json({ success: true, message: user.rows[0] });
   } catch (err) {
     console.error(err.message);
     res.status(500).json({ success: false, error: err.message });
