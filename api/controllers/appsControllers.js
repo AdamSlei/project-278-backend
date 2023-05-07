@@ -108,10 +108,18 @@ const getApp = async (req, res) => {
   try {
     const { id } = req.params;
     const app = await pool.query(
-      "SELECT * FROM apps WHERE app_id = $1 limit 10",
+      `SELECT           
+      app_name AS name,
+      category,
+      description,
+      media,
+      rating
+    FROM apps 
+    WHERE app_id = $1 
+    `,
       [id]
     );
-    res.json(app.rows);
+    res.json(app.rows[0]);
   } catch (err) {
     console.error({ success: false, error: err.message });
   }

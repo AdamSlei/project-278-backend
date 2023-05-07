@@ -127,9 +127,17 @@ const getTopMovie = async (req, res) => {
 const getMovie = async (req, res) => {
   try {
     const { id } = req.params;
-    const movie = await pool.query("select movie_id , movie_name as name, category , director,description, description , price, created_at, media, istopmovie , istopselling from WHERE movie_id = $1", [
-      id,
-    ]);
+    const movie = await pool.query(
+      `
+    select 
+      movie_name as name,
+      category,
+      description,
+      media,
+      rating
+     from MOVIES WHERE movie_id = $1`,
+      [id]
+    );
     if (movie.rows.length === 0) {
       return res.status(404).json({ message: "Movie not found" });
     }

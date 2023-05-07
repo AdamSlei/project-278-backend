@@ -28,7 +28,13 @@ const getGames = async (req, res) => {
 const getGame = async (req, res) => {
   try {
     const { id } = req.params;
-    const game = await pool.query("SELECT * FROM games WHERE game_id = $1", [
+    const game = await pool.query(`SELECT
+    game_name AS name,
+    category,
+    description,
+    media,
+    rating
+    FROM games WHERE game_id = $1`, [
       id,
     ]);
     res.json(game.rows[0]);
