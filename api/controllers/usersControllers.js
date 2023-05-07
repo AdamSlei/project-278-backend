@@ -15,7 +15,7 @@ const getUser = async (req, res) => {
   try {
     const { email } = req.query;
     const user = await pool.query(
-      "SELECT username, profile_picture FROM USERS WHERE email = $1",
+      "SELECT user_id , username, profile_picture FROM USERS WHERE email = $1",
       [email]
     );
     res.status(200).json({ success: true, payload: user.rows[0] ?? "User not found" });
