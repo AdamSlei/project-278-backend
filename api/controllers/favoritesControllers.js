@@ -116,12 +116,30 @@ const getFavorite = async (req, res) => {
 
 const addFavorite = async (req, res) => {
   try {
-    const { userId, bookId } = req.body;
+    const { userId, id, type } = req.body;
 
-    await pool.query(
-      "INSERT INTO favorites (user_id, book_id) VALUES ($1, $2)",
-      [userId, bookId]
-    );
+    if (type === "book") {
+      await pool.query(
+        "INSERT INTO favorites (user_id, book_id) VALUES ($1, $2)",
+        [userId, id]
+      );
+    } else if (type === "movie") {
+      await pool.query(
+        "INSERT INTO favorites (user_id, movie_id) VALUES ($1, $2)",
+        [userId, id]
+      );
+    } else if (type === "app") {
+      await pool.query(
+        "INSERT INTO favorites (user_id, app_id) VALUES ($1, $2)",
+        [userId, id]
+      );
+    } else if (type === "game") {
+      await pool.query(
+        "INSERT INTO favorites (user_id, game_id) VALUES ($1, $2)",
+        [userId, id]
+      );
+    }
+
     res.json("Favorite added successfully!");
   } catch (err) {
     console.error({ success: false, error: err.message });
